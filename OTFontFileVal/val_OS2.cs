@@ -641,8 +641,8 @@ namespace OTFontFileVal
                 }
 
                 // reserved bits
-                // TODO: Bit 7,8,9, v4
-                if ( (fsSelection & 0xFF80 ) != 0 )
+                if ( ( (fsSelection & 0xFF80 ) != 0 )
+                     || ((fsSelection & 0xFB00 ) != 0 && version > 3) )
                 {
                     // we need to look for Win 3.1 font pages
                     // Fonts with these
@@ -686,7 +686,8 @@ namespace OTFontFileVal
                                 for (int i=0; i<16; i++)
                                 {
                                     int nBitValue = 1<<i;
-                                    if ((nBitValue & 0xFF80) != 0)
+                                    if ( ((nBitValue & 0xFF80) != 0 && version < 4)
+                                         || ((fsSelection & 0xFB00) != 0) )
                                     {
                                         if ((fsSelection & nBitValue) != 0)
                                         {
@@ -711,7 +712,8 @@ namespace OTFontFileVal
                         for (int i=0; i<16; i++)
                         {
                             int nBitValue = 1<<i;
-                            if ((nBitValue & 0xFF80) != 0)
+                            if ( ((nBitValue & 0xFF80) != 0 && version < 4)
+                                 || ((nBitValue & 0xFB00) != 0) )
                             {
                                 if ((fsSelection & nBitValue) != 0)
                                 {
